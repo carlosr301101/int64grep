@@ -1,3 +1,7 @@
+pub fn no_parameter() -> &'static str {
+    "El programa espera al menos 2 parametros -> [query] [filepath]\nTry using --help\n"
+}
+
 pub fn search<'a> (query: &str, contents: &'a str) -> Vec<&'a str> {
     let mut results: Vec<&str> = vec![];
 
@@ -54,5 +58,12 @@ mod tests{
         assert_eq!(vec!["safe, fast, proDuctive."], search_case_insensitive(query, contents));
 
     }
+
+    #[test]
+    fn no_entrada(){
+        assert_eq!("El programa espera al menos 2 parametros -> [query] [filepath]\nTry using --help\n",no_parameter());
+
+    }
+    
     
 }
