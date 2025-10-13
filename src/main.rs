@@ -1,6 +1,9 @@
 use std::env;
+use std::error::Error;
 use std::fs;
 use std::process;
+use int64grep::search;
+
 fn main() {
     let args: Vec<String> = env::args().collect(); // En esta linea hacemos un collect de los argumentos pasados desde la consola.
     
@@ -12,12 +15,25 @@ fn main() {
     println!("Buscando por {}", config.query);
     println!("En el archivo {}\n", config.file_path);
 
-    let contents = fs::read_to_string(config.file_path).expect("Deberia ser capaz de leer el fichero");
-
-    println!("El texto contenido: \n{contents}"); // Muestra el contenido del fichero que pasamos por parametro
+    if let Err(e) = run(config) {
+        println!("Error en la aplicacion: {e}");
+        process::exit(1);
+    }
     
-    // dbg!(args); // Con esto podemos ver cuales son los argumenots pasados desde la consola
+}
 
+/// En esta funcion esta la logica de leer lo que esta en el fichero y de mostrar su contenido.
+fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    let contents = fs::read_to_string(config.file_path)?;
+
+    //println!("------El texto contenido------\n\n{contents}"); // Muestra el contenido del fichero que pasamos por parametro
+    
+    for line in search(&config.query, &contents){
+        println!("{line}");
+    }
+
+    // dbg!(args); // Con esto podemos ver cuales son los argumenots pasados desde la consola
+    Ok(())
 }
 
 /// Creamos una estructura que nos ayuda a manejar la entrada de nuestro programa. 
