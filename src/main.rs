@@ -13,6 +13,7 @@
 use int64grep::{count, no_parameter, search, search_case_insensitive, search_line_count};
 use std::env;
 use std::error::Error;
+
 use std::fs;
 use std::process;
 
