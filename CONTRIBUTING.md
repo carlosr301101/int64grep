@@ -1,40 +1,40 @@
-# Contribuir a int64grep
+# Contributing to int64grep
 
-Gracias por querer contribuir. Estas pautas ayudan a mantener el proyecto ordenado y a facilitar la revisión.
+Thanks for wanting to contribute. These guidelines help keep the project organized and make reviews faster.
 
-1) Reportar un bug o proponer una característica
-- Abre un _issue_ con una descripción clara del problema o la propuesta.
-- Incluye pasos para reproducir, la salida esperada y la salida actual.
+1) Reporting a bug or proposing a feature
+- Open an issue with a clear description of the problem or the proposal.
+- Include steps to reproduce, the expected output, and the actual output.
 
-2) Trabajar en una rama
-- Haz un fork y crea una rama con nombre descriptivo: `feature/nombre-descriptivo` o `fix/descripcion`.
+2) Work on a branch
+- Fork the repository and create a descriptive branch name such as `feature/your-feature` or `fix/short-description`.
 
-3) Formato y linting
-- Aplica formato con `rustfmt` antes de enviar PRs:
+3) Formatting and linting
+- Format your code with `rustfmt` before submitting a PR:
 
-```bash
+```powershell
 cargo fmt
 ```
 
-- Considera ejecutar `cargo clippy` para advertencias y mejorar la calidad del código:
+- Consider running `cargo clippy` to catch warnings and improve code quality:
 
-```bash
+```powershell
 cargo clippy -- -D warnings
 ```
 
 4) Tests
-- Añade/actualiza pruebas unitarias cuando añadas funcionalidad nueva o fixes bugs.
-- Ejecuta las pruebas localmente antes de enviar el PR:
+- Add or update unit tests when you add new functionality or fix bugs.
+- Run tests locally before opening a PR:
 
-```bash
+```powershell
 cargo test
 ```
 
-5) Commits y PR
-- Escribe commits atómicos y mensajes claros. Ejemplos: `fix: corregir conteo de líneas` o `feat: añadir búsqueda insensible a mayúsculas`.
-- En el PR, describe qué hace el cambio, por qué y cómo verificarlo.
+5) Commits and PRs
+- Keep commits small and focused, with clear messages. Examples: `fix: correct line counting` or `feat: add case-insensitive search`.
+- In the PR description, explain what the change does, why it was made, and how to verify it.
 
-6) Revisión
-- Se aceptan PRs cuando pasan las pruebas y la revisión de al menos una persona.
+6) Review
+- PRs are accepted after tests pass and at least one reviewer approves.
 
-Gracias por tu aporte — ¡las contribuciones pequeñas también importan!
+Thanks for your contribution — small improvements matter!

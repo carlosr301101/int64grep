@@ -3,4 +3,16 @@ name = "int64grep"
 version = "0.1.0"
 edition = "2024"
 
+# Metadata for publishing
+authors = ["int_64 <carlosr301101@gmail.com>"]
+description = "A tiny Rust crate that provides simple line-based search helpers and a small CLI similar to grep."
+license-file = "LICENSE"
+readme = "README.md"
+repository = "https://github.com/carlosr301101/int64grep"
+homepage = "https://github.com/carlosr301101/int64grep"
+documentation = "https://docs.rs/int64grep"
+keywords = ["grep", "search", "cli", "text-processing"]
+categories = ["command-line-utilities"]
+publish = true
+
 [dependencies]

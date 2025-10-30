@@ -1,59 +1,59 @@
 # int64grep
 
-Int64grep es un pequeño proyecto en Rust que busca cadenas dentro de un archivo (similar a `grep`) y expone funciones de búsqueda utilizadas por el binario del paquete.
+int64grep is a small Rust utility and library that searches for strings inside text (similar to `grep`). The crate exposes search helper functions used by the package binary.
 
-Características principales
-- Búsqueda normal (sensible a mayúsculas/minúsculas)
-- Búsqueda insensible a mayúsculas
-- Helpers para contar/numeroar resultados
+Key features
+- Plain (case-sensitive) search
+- Case-insensitive search helper
+- Helpers to number/count search results
 
-Estado
-- Código de ejemplo/ejercicio educativo. Ideal para aprender cómo escribir pruebas en Rust y cómo construir utilidades CLI pequeñas.
+Status
+- Example/learning project. Good for practicing unit testing in Rust and building small CLI utilities.
 
-Contenido
-- `src/main.rs` - Binary wrapper (usa las funciones del crate)
-- `src/lib.rs` - Lógica de búsqueda y pruebas unitarias
+Repository layout
+- `src/main.rs` — CLI binary that uses the crate functions
+- `src/lib.rs` — search logic and unit tests
 
-Requisitos
-- Rust (rustc + cargo). Versiones recientes de la toolchain estable.
+Requirements
+- Rust toolchain (rustc and cargo). Use a recent stable toolchain.
 
-Cómo compilar
+How to build
 
-En PowerShell (Windows):
+In PowerShell (Windows):
 
 ```powershell
 Set-Location -Path "e:\\carlos\\Learn\\Rust\\proyectos_rust\\int64grep"
 cargo build --release
 ```
 
-Cómo ejecutar (ejemplos)
+How to run (examples)
 
-Desde el directorio del proyecto puedes ejecutar el binario con argumentos:
+From the project directory you can run the binary with arguments:
 
 ```powershell
-# Ejecutar con cargo (pasar argumentos después de --)
-cargo run -- "query" "ruta/al/archivo.txt"
+# Run via cargo (pass program args after --)
+cargo run -- "query" "path\to\file.txt"
 
-# O usar directamente el ejecutable compilado (release)
-.\target\release\int64grep "query" "ruta\\al\\archivo.txt"
+# Or use the compiled release executable
+.\target\release\int64grep "query" "path\\to\\file.txt"
 ```
 
-Pruebas
+Tests
 
-Ejecuta las pruebas unitarias con:
+Run the unit tests with:
 
 ```powershell
 cargo test
 ```
 
-Contribuir
+Contributing
 
-Por favor revisa `CONTRIBUTING.md` para pautas sobre cómo abrir issues y enviar pull requests.
+See `CONTRIBUTING.md` for contribution guidelines: how to open issues, submit PRs, formatting, and running tests.
 
-Licencia
+License
 
-Este proyecto está bajo la licencia MIT — ver el fichero `LICENSE`.
+This project is distributed under the MIT license — see the `LICENSE` file.
 
-Contacto
+Contact
 
-Si quieres ayudar o mejorar el proyecto, abre un issue o un pull request con descripciones claras y pruebas cuando corresponda.
+If you'd like to help improve the project, please open an issue or a pull request with a clear description and tests when appropriate.
