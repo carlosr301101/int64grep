@@ -2,29 +2,33 @@ use std::env;
 use std::error::Error;
 use std::fs;
 use std::process;
-use int64grep::{search, search_case_insensitive, no_parameter};
+use int64grep::{search, search_case_insensitive, no_parameter, count};
+
 fn main() {
     let args: Vec<String> = env::args().collect(); // En esta linea hacemos un collect de los argumentos pasados desde la consola.
     
     let _ = if args.len() <3 {
-        print!("{}", no_parameter());
+        eprintln!("{}", no_parameter());
         process::exit(1);
     };
 
 
 
     let config = Config::build(&args).unwrap_or_else(|err|{
-        println!("Hubo un problema para obtener los argumentos: {err}");
+        eprintln!("Hubo un problema para obtener los argumentos: {err}");
+        helps();
         process::exit(1);
     });
 
 
 
-    println!("Buscando por {}", config.query);
-    println!("En el archivo {}\n", config.file_path);
+    println!("Buscando por: {}", config.query);
+    println!("En el archivo: {}", config.file_path);
+    println!("-----------------------------------------\n");
 
     if let Err(e) = run(config) {
-        println!("Error en la aplicacion: {e}");
+        eprintln!("Error en la aplicacion: {e}");
+        helps();
         process::exit(1);
     }
     
@@ -34,12 +38,25 @@ fn main() {
 fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(config.file_path)?;
 
+    if config.helps {
+        helps();
+        return Ok(());
+    }
     //println!("------El texto contenido------\n\n{contents}"); // Muestra el contenido del fichero que pasamos por parametro
     let results= if config.ignore_case {
         search_case_insensitive(&config.query, &contents)
     } else {
         search(&config.query, &contents)
     };
+
+    
+    if config.line_count{
+        let results_count=count(results.clone());
+        for line in results_count{
+            println!("{line}");
+        }
+        return Ok(());
+    }
 
 
     for line in results{
@@ -50,11 +67,22 @@ fn run(config: Config) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
+fn helps()  {
+    eprintln!("Opciones disponibles:");
+    eprintln!("-i --ignore: Busqueda insensible a mayuscala/minuscula.");
+    eprintln!("-c --count: Cuenta los match de linea.");
+    eprintln!("-l --line: Indica la linea donde se encuentra.");
+
+    
+}
+
 /// Creamos una estructura que nos ayuda a manejar la entrada de nuestro programa. 
 struct Config{
     query: String,
     file_path: String,
     ignore_case: bool,
+    line_count: bool,
+    helps: bool,
 }
 
 
@@ -69,21 +97,40 @@ impl Config {
         let query = args[1].clone();
         let file_path= args[2].clone();
         
-        let ignore_case = Self::ignore_case(args.last());
+        let ignore_case = Self::ignore_case();
+
+        let mut config= Config{
+            query:query,
+            file_path:file_path,
+            ignore_case:ignore_case,
+            line_count:false,
+            helps:false,
+        };
+
+        for i in args.iter(){
+            if i=="-c" || i=="--count"{
+                config.line_count=true;
+            }
+            if i=="-h" || i=="--help"{
+                config.helps=true;
+            }
+            if i=="-i" || i=="--ignore"{
+                config.ignore_case=true;
+            }
+            
+        }
 
 
-
-        Ok(Config { query, file_path, ignore_case })
+        Ok(config)
     }
 
-    fn ignore_case(args: Option<&String>) -> bool {
-        let arg_ignore = ["--ignore".to_string(),"-i".to_string()];// Esto se puede mejorar poniendolo en un vector y agregano los tipos ue se pueden
-
+    fn ignore_case() -> bool {
+    // Esto se puede mejorar poniendolo en un vector y agregano los tipos ue se pueden
         let ignore_case_env = env::var("IGNORE_CASE").is_ok();
-        let ignore_case_arg=arg_ignore.contains(args.unwrap());
 
-        return ignore_case_arg||ignore_case_env;
-
+        ignore_case_env
     }    
+
+
 
 }
