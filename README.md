@@ -32,7 +32,7 @@ From the project directory you can run the binary with arguments:
 
 ```powershell
 # Run via cargo (pass program args after --)
-cargo run -- "query" "path\to\file.txt"
+cargo run  "query" "path\to\file.txt" --
 
 # Or use the compiled release executable
 .\target\release\int64grep "query" "path\\to\\file.txt"
