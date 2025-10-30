@@ -92,7 +92,6 @@ fn helps() {
     eprintln!("-i --ignore: Busqueda insensible a mayuscala/minuscula.");
     eprintln!("-c --count: Cuenta los match de linea.");
     eprintln!("-l --line-count: Indica la linea donde se encuentra. Exclude [-c]\n");
-
 }
 /// Creamos una estructura que nos ayuda a manejar la entrada de nuestro programa.
 /// Configuration parsed from command-line arguments.
@@ -115,7 +114,6 @@ impl Config {
     /// This function expects at least two positional arguments (`query` and `file_path`) and
     /// scans for optional flags. Returns `Err` if required arguments are missing.
     fn build(args: &[String]) -> Result<Config, &'static str> {
-        
         if args.len() < 3 {
             eprintln!("{}", no_parameter());
             process::exit(1);
@@ -156,6 +154,5 @@ impl Config {
     fn ignore_case() -> bool {
         // Esto se puede mejorar poniendolo en un vector y agregano los tipos ue se pueden
         env::var("IGNORE_CASE").is_ok()
-
     }
 }
