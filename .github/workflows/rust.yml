@@ -1,6 +1,11 @@
-name: Rust
+name: Rust CI
 
 on:
+  workflow_call: 
+    outputs:
+      ci_status:
+        description: "Estado del CI: éxito o fallo"
+        value: ${{ jobs.format.result && jobs.build.result }}
   push:
     branches: [ "main" ]
   pull_request:
