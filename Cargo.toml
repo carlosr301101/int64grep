@@ -16,3 +16,4 @@ categories = ["command-line-utilities"]
 publish = true
 
 [dependencies]
+clap = { version = "4.5.51", features = ["derive"] }
