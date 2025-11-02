@@ -1,6 +1,6 @@
 //! `int64grep` — a tiny CLI that demonstrates the search helpers from this crate.
 //!
-//! Usage: `int64grep  <query> <file> [OPTIONS]`
+//! Usage: `int64grep  [OPTIONS] <query> <file>`
 //!
 //! Options:
 //! - `-i`, `--ignore` — case-insensitive search
@@ -10,19 +10,18 @@
 //! The binary uses functions exported by the crate for the core search logic, keeping `main.rs`
 //! focused on argument parsing and output formatting.
 
+use clap::Parser;
 use int64grep::{count, search, search_case_insensitive, search_line_count};
 use std::error::Error;
-use clap::Parser;
 
 use std::fs;
 use std::process;
-
 
 /// Creamos una estructura que nos ayuda a manejar la entrada de nuestro programa.
 /// Configuration parsed from command-line arguments.
 ///
 /// Fields correspond to CLI options and positional arguments.
-#[derive(Parser,Debug)]
+#[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
 struct Config {
     query: String,
