@@ -1,50 +1,63 @@
-name: Testing Linux Distro
+name: CI y Pruebas Funcionales en Linux
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  # Permite ejecutar manualmente
+  workflow_dispatch: 
 
 jobs:
   
   run-ci-tests:
-    name: Ejecutar CI (rust.yml)
-    # Llama al workflow de tests definido en rust.yml
+    name: 🧪 CI y Pruebas Unitarias
     uses: ./.github/workflows/rust.yml
+    
+    # -----------------------------------------------------
 
-  testing-linux:
-    name: Testing on Linux
+  testing-functional:
+    name: 🔎 Pruebas Funcionales (Linux)
     runs-on: ubuntu-latest
     
     needs: run-ci-tests
     
     steps:
-      - name: Checkout del Código
+      - name: ⬇️ Checkout del Código
         uses: actions/checkout@v4
 
-      - name: Instalar Rust
+      - name: ⚙️ Instalar Rust (Stable)
+        # Usamos 'dtolnay/rust-toolchain' para un manejo más eficiente
         uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable 
 
-      - name: Crear archivo de prueba
-        run: echo "This is a test file for int64grep.\nEsta segunda linea" > testfile.txt
-
-      - name: Compilar int64grep
+      - name: 🔨 Compilar Binario (Release)
+        # Este paso compila y produce el ejecutable optimizado
         run: |
             cargo build --release
-
-      - name: Verificar salida 1
+      
+      - name: 🧪 Ejecutar Pruebas Funcionales del Binario
         run: |
-            OUTPUT=$(./target/release/int64grep "test" testfile.txt)
-            if [[ "$OUTPUT" != *"This is a test file for int64grep."* ]]; then
-              echo "Error: La salida no es la esperada."
+            echo "This is a test file for int64grep.\nEsta segunda linea" > testfile.txt
+            
+            EXECUTABLE="./target/release/int64grep"
+            
+            echo "--- Verificando busqueda 1 ---"
+            OUTPUT_1=$("$EXECUTABLE" "test" testfile.txt)
+            if [[ "$OUTPUT_1" != *"This is a test file for int64grep."* ]]; then
+              echo "❌ Error: La salida no contiene la línea esperada (test)."
+              echo "Salida obtenida: $OUTPUT_1"
               exit 1
             fi
+            echo "✅ Prueba 1 exitosa."
 
-      - name: Verificar salida 2
-        run: |
-            OUTPUT=$(./target/release/int64grep "segunda" testfile.txt)
-            if [[ "$OUTPUT" != *"Esta segunda linea"* ]]; then
-              echo "Error: La salida no es la esperada."
+            # --- Prueba 2: Buscar "segunda" ---
+            echo "--- Verificando busqueda 2 ---"
+            OUTPUT_2=$("$EXECUTABLE" "segunda" testfile.txt)
+            if [[ "$OUTPUT_2" != *"Esta segunda linea"* ]]; then
+              echo "❌ Error: La salida no contiene la línea esperada (segunda)."
+              echo "Salida obtenida: $OUTPUT_2"
               exit 1
             fi
+            echo "✅ Prueba 2 exitosa."
