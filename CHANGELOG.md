@@ -1,9 +1,17 @@
 ## [unreleased]
 
+### 🚀 Features
+
+- Minor version release.
+
 ### 💼 Other
 
 - Add Linux distro test.
 - Improve the workflow for linux distro.
+
+### 📚 Documentation
+
+- *(repo)* Add Changelog.md usign git-cliff.
 ## [0.2.1] - 2025-11-02
 
 ### 🚀 Features
@@ -14,16 +22,15 @@
 ### 🐛 Bug Fixes
 
 - Remove .cargo from repo
-- Fix the documentation before the clap versioning.
-- Add .cargo to .gitignore
 
 ### 💼 Other
 
 - New Versioning and add clap package, cross compiles.
-
+- Fix the documentation before the clap versioning.
+- Add .cargo to .gitignore
 ## [0.1.1] - 2025-10-30
 
-### 🐛 Bug Fixes
+### 💼 Other
 
 - Fix Metadata on cargo.toml and Readme instructions.
 - Edition on cargo.toml
@@ -31,7 +38,7 @@
 - New Workflow and automatization of cargo publish
 ## [0.1.0] - 2025-10-30
 
-### 🚀 Features
+### 💼 Other
 
 - 1st Commit.
 - Agregado lectura del archivo, y Construida una nueva Struct que maneje los errores y el parser de nuestros parametros pasados por consola.
